@@ -1,0 +1,28 @@
+.vercel
+# Common patterns for Node.js projects
+node_modules/
+.env
+.env.local
+.env.*.local
+.DS_Store
+dist/
+build/
+coverage/
+*.log
+logs/
+.vscode/
+
+# SSL certificates (specific to your case)
+certs/
+*.pem
+*.key
+*.crt
+
+# Database files
+*.sqlite
+*.db
+
+# IDE specific files
+.idea/
+*.swp
+*.swo
