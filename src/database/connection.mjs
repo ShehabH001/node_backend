@@ -34,10 +34,10 @@ class ConnectionPool {
     max: Number(process.env.PG_CLIENTS_NUMBER), // Maximum number of clients in the pool
     idleTimeoutMillis: Number(process.env.PG_IDLE_TIMEOUT), // Close idle clients after timeout (ms)
     connectionTimeoutMillis: Number(process.env.PG_CONNECTION_TIMEOUT), // Error after timeout (ms) if no connection is available
-    ssl: {
-      ca: fs.readFileSync("./src/certs/ca.pem").toString(), // Download CA cert from Aiven
-      rejectUnauthorized: true,
-    },
+    // ssl: {
+    //   ca: fs.readFileSync("./src/certs/ca.pem").toString(), // Download CA cert from Aiven
+    //   rejectUnauthorized: true,
+    // },
   });
 
   static darwinPool = new Pool({
