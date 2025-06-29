@@ -42,7 +42,7 @@ import Translator from "../models/Translator.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { book_ids } = req.body;
+    const { ids: book_ids } = req.body;
     const { since } = req.query;
     if (!since) {
       return res.status(400).json({ message: "Since parameter is required" });
@@ -64,6 +64,7 @@ export const validate_cache = async (req, res) => {
 export const getAllBooks = async (req, res) => {
   console.log("getAllBooks request received:", req.body, req.query);
   try {
+    const user_id = req.user; // Assuming user is set in middleware
     const { limit, offset } = req.query;
     if (!limit || !offset) {
       return res.status(400).json({ message: "Limit and offset are required" });
@@ -74,7 +75,7 @@ export const getAllBooks = async (req, res) => {
     if (book_ids) {
       book_ids = book_ids.map((row) => row["id"]);
       // If book_ids are provided, return books by book_ids
-      books = await Book.getBookByIds(book_ids);
+      books = await Book.getBookByIds(book_ids, user_id);
       return res.status(200).json(books);
     } else if (!book_name && !author_name) {
       // If no book name or author name is provided, return all books by pagination
@@ -103,17 +104,20 @@ export const getAllBooks = async (req, res) => {
  * Get a book by its ID.
  */
 export const getBookById = async (req, res) => {
+  console.log("getBookById request received:", req.params);
   try {
+    const user_id = req.user; // Assuming user is set in middleware
     const { id: book_id } = req.params;
     if (!book_id) {
       return res.status(400).json({ message: "Book ID is required" });
     }
-    const book = await Book.getBookById(book_id);
+    const book = await Book.getBookById(book_id, user_id);
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
     return res.status(200).json(book);
   } catch (err) {
+    console.error("Error getting book by ID:", err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -243,6 +247,8 @@ export const downloadBook = async (req, res) => {
       return res.status(400).json({ message: "Book ID is required" });
     }
     const tokens = await Token.getTokens(book_id);
+    // store download request in the database (placeholder logic)
+    // -----
     return res.status(200).json(tokens);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -291,6 +297,25 @@ export const uploadBook = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
+export const updateReadingProgress = async (req, res) => {
+  try {
+    const { id: book_id } = req.params;
+    const { reading_progress } = req.body;
+    if (!book_id || !reading_progress) {
+      return res.status(400).json({ message: "Book ID and reading_progress are required" });
+    }
+    // Placeholder for updating reading progress logic
+    const isUpdated = Book.updateReadingProgress(book_id, reading_progress);
+    if (!isUpdated) {
+      return res.status(404).json({ message: "Book not found or reading progress not updated" });
+    }
+    return res.status(200).json({ message: "Reading progress updated successfully" });
+  } catch (err) {
+    console.error("Error updating reading progress:", err);
+    return res.status(500).json({ message: err.message });
+  }
+}
 
 // Placeholder functions for adding book-related resources
 export const addBookCategories = async (req, res) => {};

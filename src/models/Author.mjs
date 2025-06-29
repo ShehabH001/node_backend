@@ -17,6 +17,9 @@ class Author {
     const query = `SELECT * FROM author WHERE id = $1`;
     const values = [author_id];
     const { rows } = await darwinPool.query(query, values);
+    if (rows.length === 0) {
+      throw new Error(`Author with ID ${author_id} not found`);
+    }
     return rows[0];
   }
 

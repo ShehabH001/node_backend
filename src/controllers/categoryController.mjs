@@ -28,7 +28,7 @@ import Category from "../models/Category.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { category_ids } = req.body;
+    const { ids: category_ids } = req.body;
     const { since } = req.query;
     if (!category_ids) {
       return res.status(400).json({ message: "Category IDs are required" });

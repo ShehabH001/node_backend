@@ -1,4 +1,5 @@
 import pool from "../database/connection.mjs";
+import { validateCacheUtil } from "../utils/validateCache.mjs";
 const darwinPool = pool.darwinPool;
 
 //////////////////// Testing /////////////////
@@ -19,6 +20,9 @@ class Publisher {
     const query = `SELECT * FROM publisher WHERE id = $1`;
     const values = [publisher_id];
     const { rows } = await darwinPool.query(query, values);
+    if (rows.length === 0) {
+      throw new Error(`Publisher with ID ${publisher_id} not found`);
+    }
     return rows[0];
   }
 
@@ -27,14 +31,14 @@ class Publisher {
     SELECT * FROM 
       publisher 
     join 
-      book 
+      product_template 
     ON 
-      publisher.id = book.publisher_id
+      publisher.id = product_template.publisher_id
     WHERE 
-      book.id = $1`;
+      product_template.id = $1`;
     const values = [book_id];
     const { rows } = await darwinPool.query(query, values);
-    return rows;
+    return rows[0];
   }
 }
 

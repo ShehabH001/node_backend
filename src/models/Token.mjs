@@ -39,6 +39,9 @@ class Token {
     const query = `SELECT * FROM token WHERE book_id = $1 AND sequence = $2`;
     const values = [book_id, token_sequence];
     const { rows } = await gumballPool.query(query, values);
+    if (rows.length === 0) {
+      throw new Error(`Token with sequence ${token_sequence} not found for book ID ${book_id}`);
+    }
     return rows[0];
   }
 

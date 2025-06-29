@@ -38,6 +38,9 @@ class ActualUser {
     )} = $1`;
     const values = [user_id];
     const result = await darwinPool.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error(`User with ID ${user_id} not found`);
+    }
     return result.rows[0];
   }
 
@@ -50,6 +53,9 @@ class ActualUser {
     )} = $1`;
     const values = [email];
     const result = await darwinPool.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error(`User with email ${email} not found`);
+    }
     return result.rows[0];
   }
 
@@ -64,6 +70,9 @@ class ActualUser {
     )} IS NULL) AND ${this.#columns.get("registration_type")} = $3`;
     const values = [email, password, registration_type];
     const result = await darwinPool.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error("Invalid email, password, or registration type");
+    }
     return result.rows[0];
   }
 
@@ -76,6 +85,9 @@ class ActualUser {
     )} = $1 WHERE ${this.#columns.get("email")} = $2 RETURNING *`;
     const values = [newPassword, email];
     const result = await darwinPool.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error(`User with email ${email} not found`);
+    }
     return result.rows[0];
   }
 
@@ -99,6 +111,9 @@ class ActualUser {
       user.id,
     ];
     const result = await darwinPool.query(query, values);
+    if (result.rowCount === 0) {
+      throw new Error(`User with ID ${user.id} not found`);
+    }
     return result.rows[0];
   }
 

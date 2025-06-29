@@ -41,6 +41,7 @@ import {
   validate_cache,
   getBooksWithFlitter,
   uploadBook,
+  updateReadingProgress,
 } from "../controllers/bookController.mjs";
 import annotationRoutes from "./annotationRoute.mjs";
 const router = Router();
@@ -54,11 +55,12 @@ router.get("/:id/authors", getBookAuthors);
 router.get("/:id/translators", getBookTranslators);
 router.get("/:id/reviewers", getBookReviewers);
 router.get("/:id/rating", getBookRating);
-router.get("/:id/tokens/:token_sequence", getToken);
+router.get("/:id/tokens/:token_sequence", getToken);   // disable this route because i can't know if end-point gets all tokens for a book or a specific token, so i can't store download request in database
 router.get("/:id/download", downloadBook);
 router.get("/:id/metadata", getMetadata);
 router.post("/filters", getBooksWithFlitter); // Get all flitters for books
 router.post("/:id", uploadBook);
+router.post("/:id/reading-progress", updateReadingProgress); // Upload a book
 // Annotation routes for books
 router.use("/:id/annotations", annotationRoutes);
 

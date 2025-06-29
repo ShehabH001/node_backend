@@ -28,6 +28,7 @@ import authorRoutes from "./routes/authorRoute.mjs";
 import changesRoutes from "./routes/changesRoute.mjs";
 import publisherRoutes from "./routes/publisherRoute.mjs";
 import translatorRoutes from "./routes/translatorRoute.mjs";
+import subscriptionRoutes from "./routes/subscriptionRoute.mjs";
 import { verifyTokenMiddleware } from "./middlewares/access_token_middleware.mjs";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
@@ -82,6 +83,7 @@ app.use(process.env.STANDARD_URL_FORMAT + "tags", tagRoutes); // Tags route
 app.use(process.env.STANDARD_URL_FORMAT + "authors", authorRoutes); // Authors route
 app.use(process.env.STANDARD_URL_FORMAT + "publishers", publisherRoutes); // Publisher route
 app.use(process.env.STANDARD_URL_FORMAT + "translators", translatorRoutes); // Translator route
+app.use(process.env.STANDARD_URL_FORMAT + "Subscriptions", subscriptionRoutes)
 
 // Global error handler
 app.use((err, req, res, next) => {

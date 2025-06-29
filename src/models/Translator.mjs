@@ -1,4 +1,5 @@
 import pool from "../database/connection.mjs";
+import { validateCacheUtil } from "../utils/validateCache.mjs";
 const darwinPool = pool.darwinPool;
 
 //////////////////// Testing /////////////////
@@ -24,6 +25,9 @@ class Translator {
     const query = `SELECT * FROM translator WHERE id = $1`;
     const values = [translator_id];
     const { rows } = await darwinPool.query(query, values);
+    if (rows.length === 0) {
+      throw new Error(`Translator with ID ${translator_id} not found`);
+    }
     return rows[0];
   }
 

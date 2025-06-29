@@ -20,6 +20,9 @@ class Category {
     const query = `SELECT * FROM category WHERE id = $1`;
     const values = [category_id];
     const { rows } = await darwinPool.query(query, values);
+    if (rows.length === 0) {
+      throw new Error(`Category with ID ${category_id} not found`);
+    }
     return rows[0];
   }
 

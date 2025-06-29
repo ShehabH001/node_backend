@@ -34,6 +34,9 @@ class Set {
       const query = `INSERT INTO set (user_id, name) VALUES ($1, $2);`;
       const values = [user_id, set_name];
       const result = await db.query(query, values);
+        if (result.rowCount === 0) {
+            throw new Error("Failed to create set");
+        }
       return result.rows[0];
    
   }

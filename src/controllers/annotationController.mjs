@@ -120,7 +120,7 @@ export const syncBookHighlights = async (req, res) => {
       return res.status(400).json({ message: "Book ID is required" });
     }
     if (!highlights || !Array.isArray(highlights)) {
-      return res.status(400).json({ message: "Highlights are required" });
+      return res.status(400).json({ message: "items are required" });
     }
     const result = await Highlight.highlights(user_id, book_id, highlights);
     return res.status(201).json(result);
@@ -138,7 +138,7 @@ export const syncBookBookmarks = async (req, res) => {
       return res.status(400).json({ message: "Book ID is required" });
     }
     if (!bookmarks || !Array.isArray(bookmarks)) {
-      return res.status(400).json({ message: "Bookmarks are required" });
+      return res.status(400).json({ message: "items are required" });
     }
     const result = await Bookmark.bookmarks(user_id, book_id, bookmarks);
     return res.status(201).json(result);
@@ -156,7 +156,7 @@ export const syncBookNotes = async (req, res) => {
       return res.status(400).json({ message: "Book ID is required" });
     }
     if (!notes || !Array.isArray(notes)) {
-      return res.status(400).json({ message: "Notes are required" });
+      return res.status(400).json({ message: "items are required" });
     }
     const result = await Note.notes(user_id, book_id, notes);
     return res.status(201).json(result);

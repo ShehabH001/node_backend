@@ -111,9 +111,10 @@ export const resendVerification = async (req, res) => {
 // Login user and return JWT token
 export const login = async (req, res) => {
   try {
-    if (!req.body.email || !req.body.password || !req.registration_type) {
+    if (!req.body.email || !req.body.password ) {
       return res.status(400).json({ message: "Missing required fields" });
     }
+    req.body.registration_type = "EMAIL_PASSWORD"; // default registration type is email
     const user = await ActualUser.login(req.body);
     const token = await generateToken(user.id); // check
     res

@@ -29,7 +29,7 @@ import Tag from "../models/Tag.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { tag_ids } = req.body;
+    const { ids: tag_ids } = req.body;
     const { since } = req.query;
     if (!tag_ids) {
       return res.status(400).json({ message: "Tag IDs are required" });

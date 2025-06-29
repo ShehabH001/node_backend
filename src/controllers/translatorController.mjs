@@ -28,7 +28,7 @@ import Translator from "../models/Translator.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { translator_ids } = req.body;
+    const { ids: translator_ids } = req.body;
     const { since } = req.query;
     if (!translator_ids) {
       return res.status(400).json({ message: "Translator IDs are required" });

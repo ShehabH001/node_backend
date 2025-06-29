@@ -34,10 +34,10 @@ class Highlight extends Annotation {
       }
     }
     if (updatedHighlights.length > 0) {
-      isUpdated = await updateHighlights(updatedHighlights);
+      isUpdated = await this.updateHighlights(updatedHighlights);
     }
     if (deletedHighlights.length > 0) {
-      isDeleted = await deleteHighlights(deletedHighlights);
+      isDeleted = await this.deleteHighlights(deletedHighlights);
     }
     return {
       ids: highlightsId,

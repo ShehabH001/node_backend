@@ -28,7 +28,7 @@ import Publisher from "../models/Publisher.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { publisher_ids } = req.body;
+    const { ids: publisher_ids } = req.body;
     const { since } = req.query;
     if (!publisher_ids) {
       return res.status(400).json({ message: "Publisher IDs are required" });

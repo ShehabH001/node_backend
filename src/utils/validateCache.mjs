@@ -27,12 +27,18 @@ export async function validateCacheUtil(
   since
 ) {
   try {
-    const updatedItemsQeury = `select ${id_column_name} from ${table_name} where ${update_column_name} > $1`;
+    // const updatedItemsQeury = `select ${id_column_name} from ${table_name} where ${update_column_name} > $1`;
+    // const updatedItemValues = [since];
+    // let { rows: updatedRows } = await darwinPool
+    //   .query(updatedItemsQeury, updatedItemValues)
+    // updatedRows = updatedRows.map((row) => row[id_column_name]);
+    // const updatedItems = ids.filter((item) => updatedRows.includes(item));
+
+    const updatedItemsQeury = `select * from ${table_name} where ${update_column_name} > $1`;
     const updatedItemValues = [since];
-    let { rows: updatedRows } = await darwinPool
-      .query(updatedItemsQeury, updatedItemValues)
-    updatedRows = updatedRows.map((row) => row[id_column_name]);
-    const updatedItems = ids.filter((item) => updatedRows.includes(item));
+    let { rows: updatedRows } = await darwinPool.query(updatedItemsQeury, updatedItemValues)
+    const updatedItems = updatedRows.filter((row) => ids.includes(row[id_column_name]))
+      
 
     const deletedItemsQuery = `select ${id_column_name} from ${table_name} where ${id_column_name} = ANY($1)`;
     const deletedItemValues = [ids];

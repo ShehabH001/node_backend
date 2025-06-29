@@ -10,7 +10,7 @@ class Subscription {
 
   static async getSubscriptionBooks(Subscription_id, limit, offset){
     const query = `
-    select from 
+    select product_template.id from 
       product_template 
     inner join 
       product_template_stock_warehouse_rel 
@@ -24,3 +24,5 @@ class Subscription {
     return rows
   }
 }
+
+export default Subscription;

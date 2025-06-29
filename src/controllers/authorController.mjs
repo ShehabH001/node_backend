@@ -28,7 +28,7 @@ import Book from "../models/Book.mjs";
  */
 export const validate_cache = async (req, res) => {
   try {
-    const { author_ids } = req.body;
+    const { ids: author_ids } = req.body;
     const { since } = req.query;
     if (!author_ids) {
       return res.status(400).json({ message: "Author IDs are required" });

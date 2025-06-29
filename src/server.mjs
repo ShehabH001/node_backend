@@ -24,6 +24,5 @@ app.listen(PORT, () => {
 
 // Health check or welcome route
 app.get('/', (req, res) => {
-  console.log(req.body);
   res.send('Welcome');
 });
